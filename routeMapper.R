@@ -3,12 +3,12 @@ library(dplyr)
 library(shiny)
 library(shinydashboard)
 library(googleway)
-library(fontawesome)
+#library(fontawesome)
 
 #### server
 server <- function(input, output, session) {
   
-  ##Google API Key
+  ##Google API Key  
   
   api_key <- "AIzaSyBo4AHjlO0qlcbDMX0i_WyAgxzQlAWlmDM"
   
@@ -44,18 +44,19 @@ server <- function(input, output, session) {
       lat_long$originLocationDF <- bind_rows(lat_long$originLocationDF,
                                              lat_long$originLocationDFnew)
     
-      lat_long$originLocationDF <- tail(lat_long$originLocationDF, n=2)
+      #lat_long$originLocationDF <- head(lat_long$originLocationDF, n=2)
       
       print(lat_long$originLocationDF)
       
       #update google map view and add markers
+      if(nrow(lat_long$originLocationDF) <=2 ){
       google_map_update(map_id="map", data = lat_long$originLocationDFnew) %>%
         add_markers(update_map_view = FALSE)
-      
+      }
       
     }
     
-    google_directions()
+    #google_directions()
     
   )
   
@@ -83,7 +84,7 @@ ui <- fluidPage(
                     
                     #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
                     
-                    actionButton("centerMaponAddress", "Create Route"),
+                    actionButton("centerMaponAddress", "Create Route")
                     
                     
              ), #end box
@@ -93,7 +94,7 @@ ui <- fluidPage(
                     google_mapOutput(outputId = "map"), 
                     tableOutput("example")
                     
-             ),)
+             ))
     
 
         )#end dashbooard body
