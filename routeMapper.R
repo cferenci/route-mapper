@@ -37,12 +37,20 @@ server <- function(input, output, session) {
       #print(input$map_map_click)
       
       #update startingAddress input value
-      updateTextInput(session, "startingAddress", value = paste(originLat, originLon, sep = ", "))
       
       lat_long$originLocationDFnew <- data.frame(lat = originLat, lon = originLon)
       
       lat_long$originLocationDF <- bind_rows(lat_long$originLocationDF,
                                              lat_long$originLocationDFnew)
+      
+      lat_long$originLocationDFhead <- head(lat_long$originLocationDF, 2)
+      
+      updateTextInput(session, "startingAddress", value = paste(round(lat_long$originLocationDFhead[1, 1], 2), 
+                                                                round(lat_long$originLocationDFhead[1,2], 2), sep = ", "))
+      updateTextInput(session, "endingAddress", value = paste(round(lat_long$originLocationDFhead[2, 1], 2), 
+                                                              round(lat_long$originLocationDFhead[2,2], 2), sep = ", "))
+      
+      
     
       #lat_long$originLocationDF <- head(lat_long$originLocationDF, n=2)
       
@@ -60,7 +68,7 @@ server <- function(input, output, session) {
     
   )
   
-  output$example <- renderTable(lat_long$originLocationDF)
+  output$example <- renderTable(lat_long$originLocationDFhead)
   
   
   
@@ -91,8 +99,7 @@ ui <- fluidPage(
              
              column(8,
                     
-                    google_mapOutput(outputId = "map"), 
-                    tableOutput("example")
+                    google_mapOutput(outputId = "map")
                     
              ))
     
