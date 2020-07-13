@@ -47,17 +47,16 @@ server <- function(input, output, session) {
       
       updateTextInput(session, "startingAddress", value = paste(round(lat_long$originLocationDFhead[1, 1], 2), 
                                                                 round(lat_long$originLocationDFhead[1,2], 2), sep = ", "))
+      
+      if(nrow(lat_long$originLocationDF) != 1){
       updateTextInput(session, "endingAddress", value = paste(round(lat_long$originLocationDFhead[2, 1], 2), 
                                                               round(lat_long$originLocationDFhead[2,2], 2), sep = ", "))
-      
+      }
       
     
-      #lat_long$originLocationDF <- head(lat_long$originLocationDF, n=2)
-      
-      print(lat_long$originLocationDF)
-      
+
       #update google map view and add markers
-      if(nrow(lat_long$originLocationDF) <=2 ){
+      if(nrow(lat_long$originLocationDF) <= 2 ){
       google_map_update(map_id="map", data = lat_long$originLocationDFnew) %>%
         add_markers(update_map_view = FALSE)
       }
@@ -88,7 +87,7 @@ ui <- fluidPage(
                     
                     textInput(inputId = "startingAddress", label = "Origin", value = "Origin Location..."),
                     
-                    textInput(inputId = "endingAddress", label = "Destination"),
+                    textInput(inputId = "endingAddress", label = "Destination", "Destination..."),
                     
                     #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
                     
