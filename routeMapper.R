@@ -65,7 +65,24 @@ server <- function(input, output, session) {
     
     #google_directions()
     
+    
   )
+  
+  #clear markers
+
+  observeEvent(input$clearMarkers,{
+     google_map_update(map_id="map") %>%
+       clear_markers()
+    
+    updateTextInput(session, "startingAddress",
+                    value = paste("Origin Location..."))
+    
+    updateTextInput(session, "endingAddress",
+                    value = paste("Destination..."))
+   
+    session$reload() 
+  }
+)
   
   output$example <- renderTable(lat_long$originLocationDFhead)
   
@@ -91,7 +108,9 @@ ui <- fluidPage(
                     
                     #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
                     
-                    actionButton("centerMaponAddress", "Create Route")
+                    actionButton("centerMaponAddress", "Create Route"),
+                    
+                    actionLink("clearMarkers", "Clear Markers")
                     
                     
              ), #end box
