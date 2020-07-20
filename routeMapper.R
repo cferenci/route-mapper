@@ -92,7 +92,7 @@ server <- function(input, output, session) {
 }
 
 #### user interface
-ui <- navbarPage("RouteR",theme = "/css/bootstrap.css",position = c("static-top"), inverse = TRUE, fluid = TRUE,
+ui <- navbarPage("RouteR",theme = "bootstrap.css", position = c("fixed-top"), inverse = TRUE, fluid = TRUE,
     
     tabPanel("Create New Route",
       fluidRow(
@@ -107,7 +107,7 @@ ui <- navbarPage("RouteR",theme = "/css/bootstrap.css",position = c("static-top"
              
              #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
              
-             actionButton("centerMaponAddress", "Create Route"),
+             actionButton("centerMaponAddress", "Create Route", class = "btn-primary"),
              
              actionLink("clearMarkers", "Clear Markers")
              
