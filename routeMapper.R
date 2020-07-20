@@ -92,41 +92,65 @@ server <- function(input, output, session) {
 }
 
 #### user interface
-ui <- navbarPage("RouteR",theme = "bootstrap.css", position = c("fixed-top"), inverse = TRUE, fluid = TRUE,
+ui <- tags$html(
+  
+    #html head
+    tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),
     
-    tabPanel("Create New Route",
-      fluidRow(
+    #BEGIN CONTENT
+  
+    #start body
+    tags$body(
       
-      column(4,
-             
-             h3("Create Route"),
-             
-             textInput(inputId = "startingAddress", label = "Origin", value = "Origin Location..."),
-             
-             textInput(inputId = "endingAddress", label = "Destination", "Destination..."),
-             
-             #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
-             
-             actionButton("centerMaponAddress", "Create Route", class = "btn-primary"),
-             
-             actionLink("clearMarkers", "Clear Markers")
-             
-             
-      ), #endcolumn
+      #Header Navigation
+      tags$nav(class = "navbar navbar-dark bg-dark",
+               tags$a(class = "navbar-brand", href="#", "RouteR"),
+               
+               tags$div(class="navbar-nav",
+                        
+                        tags$a(class="nav-item nav-link active", href="#", "Create New Route")
+                        )
+      ),
+               
       
-      column(8,
-             
-             google_mapOutput(outputId = "map")
-             
-      )#endcolumn
+      tags$div(class="container-fluid",
+               
+               tags$div(class = "row",
+                 
+                 tags$div(class = "col-4 pt-3",
+                        
+                        h3("Create Route"),
+                        
+                        textInput(inputId = "startingAddress", label = "Origin", value = "Origin Location..."),
+                        
+                        textInput(inputId = "endingAddress", label = "Destination", "Destination..."),
+                        
+                        #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
+                        
+                        actionButton("centerMaponAddress", "Create Route", class = "btn-primary"),
+                        
+                        actionLink("clearMarkers", "Clear Markers")
+                        
+                        
+                 ), #endcolumn
+                 
+                 tags$div(class="col-8",
+                        
+                        google_mapOutput(outputId = "map")
+                        
+                 )#endcolumn
+                 
+               )#endRow
+      ),#endTabPanel
       
-    )#endRow
-   ),#endTabPanel
-   
-   tabPanel("My Data",
-            p("Summary / History of Data"))
-   
-  )#endNavBarPage
+      tabPanel("My Data",
+               p("Summary / History of Data"))
+      
+    )
+    
+)##end body
+    
+    
               
     
         
