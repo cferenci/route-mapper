@@ -11,6 +11,7 @@ server <- function(input, output, session) {
   ##Google API Key  
   
   api_key <- "AIzaSyBo4AHjlO0qlcbDMX0i_WyAgxzQlAWlmDM"
+
   
   ##render Google map
   
@@ -91,40 +92,43 @@ server <- function(input, output, session) {
 }
 
 #### user interface
-ui <- fluidPage(
-  
-  titlePanel("Route Creator"),
-
-  
+ui <- navbarPage("RouteR",theme = "/css/bootstrap.css",position = c("static-top"), inverse = TRUE, fluid = TRUE,
     
-  mainPanel(
-    fluidRow(h3("Create Route"),
+    tabPanel("Create New Route",
+      fluidRow(
+      
+      column(4,
              
-             column(4,
-                    
-                    textInput(inputId = "startingAddress", label = "Origin", value = "Origin Location..."),
-                    
-                    textInput(inputId = "endingAddress", label = "Destination", "Destination..."),
-                    
-                    #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
-                    
-                    actionButton("centerMaponAddress", "Create Route"),
-                    
-                    actionLink("clearMarkers", "Clear Markers")
-                    
-                    
-             ), #end box
+             h3("Create Route"),
              
-             column(8,
-                    
-                    google_mapOutput(outputId = "map")
-                    
-             ))
+             textInput(inputId = "startingAddress", label = "Origin", value = "Origin Location..."),
+             
+             textInput(inputId = "endingAddress", label = "Destination", "Destination..."),
+             
+             #radioButtons(inputId = "routeType", label = "Select Route Type", choices = list("Most greenspace" = 1, "Least Polluted Route" = 2, "Most Efficient Route" = 3), selected = 1),
+             
+             actionButton("centerMaponAddress", "Create Route"),
+             
+             actionLink("clearMarkers", "Clear Markers")
+             
+             
+      ), #endcolumn
+      
+      column(8,
+             
+             google_mapOutput(outputId = "map")
+             
+      )#endcolumn
+      
+    )#endRow
+   ),#endTabPanel
+   
+   tabPanel("My Data",
+            p("Summary / History of Data"))
+   
+  )#endNavBarPage
+              
     
-
-        )#end dashbooard body
         
-      ) #end dashboardPage
-
 
 shinyApp(ui = ui, server = server)
