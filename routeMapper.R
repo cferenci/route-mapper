@@ -103,12 +103,18 @@ ui <- tags$html(
     tags$body(
       
       #Header Navigation
-      tags$nav(class = "navbar navbar-dark bg-dark",
+      tags$nav(class = "navbar sticky-top navbar-dark bg-dark",
                tags$a(class = "navbar-brand", href="#", "RouteR"),
                
-               tags$div(class="navbar-nav",
+               tags$div(class="navbar-nav justify-content-end",
                         
-                        tags$a(class="nav-item nav-link active", href="#", "Create New Route")
+                        tags$a(class="nav-item", href="#", "Test")
+                        ,
+                        
+                        tags$a(class="nav-item", href="#", "Trends")
+                        ,
+                        
+                        tags$a(class="nav-item btn btn-success", href="#", "Create New Route")
                         )
       ),
                
