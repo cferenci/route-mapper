@@ -95,7 +95,14 @@ server <- function(input, output, session) {
 ui <- tags$html(
   
     #html head
-    tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),
+    tags$head(
+      
+      tags$meta(charset="utf-8"),
+      tags$meta(name="viewport", content="width-device-width, initial-scale=1, shrink-to-fit=no"),
+      
+      tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
+      
+      ),#end head
     
     #BEGIN CONTENT
   
@@ -103,20 +110,30 @@ ui <- tags$html(
     tags$body(
       
       #Header Navigation
-      tags$nav(class = "navbar sticky-top navbar-dark bg-dark",
+      tags$nav(class = "navbar navbar-expand-lg sticky-top navbar-dark bg-dark",
                tags$a(class = "navbar-brand", href="#", "RouteR"),
                
-               tags$div(class="navbar-nav justify-content-end",
+               tags$div(class="collapse navbar-collapse justify-content-end",
                         
-                        tags$a(class="nav-item", href="#", "Test")
-                        ,
+                        tags$ul(class="navbar-nav", 
+                                
+                                tags$li(class="nav-item",
+                                        
+                                        tags$a(class="nav-link", href="#", "Trends")),
+                                
+                                
+                                tags$li(class="nav-item",
+                                       
+                                       tags$a(class="nav-link", href="#", "My Profile")),
+                                
+                                tags$li(class="nav-item",
+                                       
+                                       tags$a(class="btn btn-success", href="#", "Create New Route"))
+                                
+                                )#end ul
+               )#end div
                         
-                        tags$a(class="nav-item", href="#", "Trends")
-                        ,
-                        
-                        tags$a(class="nav-item btn btn-success", href="#", "Create New Route")
-                        )
-      ),
+      ),#end Nav
                
       
       tags$div(class="container-fluid",
@@ -149,8 +166,6 @@ ui <- tags$html(
                )#endRow
       ),#endTabPanel
       
-      tabPanel("My Data",
-               p("Summary / History of Data"))
       
     )
     
